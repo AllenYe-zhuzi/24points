@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { judge } from '../src/judge.js';
+import { judge } from './load.js';
 
 test('AE1 fraction intermediate is correct', () => {
   assert.equal(judge('6÷(1−3÷4)', [6, 1, 3, 4]).status, 'correct');

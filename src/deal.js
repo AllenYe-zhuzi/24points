@@ -1,4 +1,5 @@
-import { add, div, is24, mul, rat, sub } from './exact.js';
+(function () {
+const { add, div, is24, mul, rat, sub } = globalThis.game;
 
 const RANKS = [
   ['A', 1],
@@ -23,7 +24,7 @@ const SUITS = [
   ['spades', '♠', false],
 ];
 
-export function freshDeck() {
+function freshDeck() {
   const cards = [];
   for (const [label, value] of RANKS) {
     for (const [suit, symbol, red] of SUITS) {
@@ -33,11 +34,11 @@ export function freshDeck() {
   return cards;
 }
 
-export function solveValues(values) {
+function solveValues(values) {
   return solve(values.map((value) => ({ v: rat(value), e: String(value) })));
 }
 
-export function dealHand(random = Math.random) {
+function dealHand(random = Math.random) {
   for (let attempt = 0; attempt < 80; attempt += 1) {
     const cards = shuffle(freshDeck(), random).slice(0, 4);
     const solution = solveValues(cards.map((card) => card.value));
@@ -81,3 +82,6 @@ function shuffle(cards, random) {
   }
   return copy;
 }
+
+Object.assign(globalThis.game, { freshDeck, solveValues, dealHand });
+})();

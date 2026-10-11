@@ -1,21 +1,21 @@
-import { dealHand } from './deal.js';
-import { judge } from './judge.js';
+(function () {
+const { dealHand, judge } = globalThis.game;
 
 const QUESTION_MS = 60_000;
 const QUESTION_COUNT = 10;
 
-export function createRound(now, deal = dealHand) {
+function createRound(now, deal = dealHand) {
   return openQuestion({ scores: [], questionIndex: 1, deal }, now);
 }
 
-export function tick(state, now) {
+function tick(state, now) {
   if (state.phase !== 'answering') return state;
   const remainingMs = state.startedAt + QUESTION_MS - now;
   if (remainingMs <= 0) return lock(state, 'timedOut', 0, 0);
   return { ...state, remainingMs };
 }
 
-export function submit(state, expression, now) {
+function submit(state, expression, now) {
   const current = tick(state, now);
   if (current.phase !== 'answering') return current;
   const result = judge(expression, current.values);
@@ -24,12 +24,12 @@ export function submit(state, expression, now) {
   return lock(current, 'wrong', 0, current.remainingMs);
 }
 
-export function reveal(state) {
+function reveal(state) {
   if (state.phase !== 'wrong' && state.phase !== 'timedOut') return state;
   return { ...state, revealed: true };
 }
 
-export function next(state, now) {
+function next(state, now) {
   if (!isLocked(state.phase)) return state;
   if (state.questionIndex < QUESTION_COUNT) {
     return openQuestion(
@@ -46,7 +46,7 @@ export function next(state, now) {
   };
 }
 
-export function exitRound(state) {
+function exitRound(state) {
   if (state.phase === 'scored') return { ...state, phase: 'left' };
   if (state.phase === 'answering' || isLocked(state.phase)) {
     return { ...state, phase: 'abandoned', total: null, revealed: false };
@@ -54,12 +54,12 @@ export function exitRound(state) {
   return state;
 }
 
-export function newRound(state, now) {
+function newRound(state, now) {
   if (state.phase !== 'scored') return state;
   return createRound(now, state.deal);
 }
 
-export function view(state) {
+function view(state) {
   const locked = isLocked(state.phase);
   const showScore = state.phase === 'scored' || state.phase === 'left';
   return {
@@ -114,3 +114,15 @@ function lock(state, phase, points, remainingMs) {
 function isLocked(phase) {
   return phase === 'correct' || phase === 'wrong' || phase === 'timedOut';
 }
+
+Object.assign(globalThis.game, {
+  createRound,
+  tick,
+  submit,
+  reveal,
+  next,
+  exitRound,
+  newRound,
+  view,
+});
+})();

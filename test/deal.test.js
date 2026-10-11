@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { dealHand, freshDeck, solveValues } from '../src/deal.js';
-import { judge } from '../src/judge.js';
+import { dealHand, freshDeck, judge, solveValues } from './load.js';
 
 test('several dealt hands are solvable and physically distinct', () => {
   for (let i = 0; i < 12; i += 1) {

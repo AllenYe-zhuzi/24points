@@ -1,5 +1,6 @@
-import { dealHand } from './deal.js';
-import {
+(function () {
+const {
+  dealHand,
   createRound,
   exitRound,
   newRound,
@@ -8,7 +9,7 @@ import {
   submit,
   tick,
   view,
-} from './round.js';
+} = globalThis.game;
 
 const outcomeText = {
   correct: '答对了',
@@ -31,6 +32,9 @@ const nodes = {
   newRound: document.querySelector('#new-round'),
   exit: document.querySelector('#exit'),
 };
+
+const openHint = document.querySelector('#open-hint');
+if (openHint) openHint.remove();
 
 let state = createRound(Date.now(), dealHand);
 
@@ -111,3 +115,4 @@ function render() {
 function isLocked(phase) {
   return phase === 'correct' || phase === 'wrong' || phase === 'timedOut';
 }
+})();

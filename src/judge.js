@@ -1,6 +1,7 @@
-import { add, div, is24, mul, rat, sub } from './exact.js';
+(function () {
+const { add, div, is24, mul, rat, sub } = globalThis.game;
 
-export function judge(expression, values) {
+function judge(expression, values) {
   try {
     const parsed = parse(normalize(expression));
     const got = [...parsed.nums].sort((a, b) => a - b);
@@ -14,7 +15,7 @@ export function judge(expression, values) {
   }
 }
 
-export function normalize(expression) {
+function normalize(expression) {
   return String(expression)
     .replace(/\s+/g, '')
     .replace(/×/g, '*')
@@ -110,3 +111,6 @@ function tokenize(source) {
 function fail() {
   throw new Error('unevaluable');
 }
+
+Object.assign(globalThis.game, { judge, normalize });
+})();

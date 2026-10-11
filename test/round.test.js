@@ -9,7 +9,7 @@ import {
   submit,
   tick,
   view,
-} from '../src/round.js';
+} from './load.js';
 
 const solvable = {
   cards: [

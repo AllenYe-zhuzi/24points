@@ -20,5 +20,8 @@ test('page skeleton exposes the round controls', () => {
     assert.match(html, new RegExp(`id="${id}"`));
   }
   assert.match(html, /styles\.css/);
-  assert.match(html, /src\/main\.js/);
+  assert.doesNotMatch(html, /type="module"/);
+  for (const file of ['exact.js', 'judge.js', 'deal.js', 'round.js', 'main.js']) {
+    assert.match(html, new RegExp(`src="src/${file}"`));
+  }
 });

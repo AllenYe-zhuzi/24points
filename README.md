@@ -4,13 +4,7 @@
 
 ## 打开
 
-在仓库根目录启动静态服务，然后打开 `index.html`：
-
-```bash
-python -m http.server 8080
-```
-
-浏览器访问 `http://127.0.0.1:8080/`。直接用 `file://` 打开不能加载页面脚本。
+保留 `index.html`、`styles.css`、`src` 文件夹和 `打开游戏.bat`。双击 `打开游戏.bat`，游戏会用 Edge 打开。
 
 ## 测试
 
