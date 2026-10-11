@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>24 点</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main id="app">
+      <p id="question-index"></p>
+      <p id="timer"></p>
+      <div id="cards"></div>
+      <form id="answer-form">
+        <label for="expression">算式</label>
+        <input id="expression" autocomplete="off" inputmode="text" />
+        <button id="submit" type="submit">提交</button>
+      </form>
+      <p id="outcome"></p>
+      <p id="solution"></p>
+      <p id="score"></p>
+      <div id="actions">
+        <button id="reveal" type="button">展示答案</button>
+        <button id="next" type="button">下一题</button>
+        <button id="new-round" type="button">开始下一轮</button>
+        <button id="exit" type="button">退出</button>
+      </div>
+    </main>
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>
